@@ -1,3 +1,5 @@
+import NavItensComponent from "@/components/pages/dashboard/NavItens"
+import UserDropdownComponent from "@/components/pages/dashboard/UserDropDown"
 import Image from "next/image"
 
 interface DashboardLayoutProps {
@@ -10,6 +12,13 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <aside className="w-full h-full flex flex-col items-center border-r border-muted">
                 <div className="w-full p-6 border-b border-muted">
                 <Image src="/logo.svg" width={96} height={86}  alt="Resume Creator" className="flex m-auto"/>
+                </div>
+
+                <NavItensComponent />
+
+                <div 
+                className="w-full mt-auto border-t border-muted px-3 py-4 items-center justify-between gap-2">
+                    <UserDropdownComponent />
                 </div>
             </aside>
             <main>
