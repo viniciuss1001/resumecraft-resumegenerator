@@ -8,13 +8,17 @@ import {
 } from "@/components/ui/dialog"
 import { ReactNode } from "react"
 
-interface DialogToUseProps {
+export type BaseDialogProps = {
     children?: ReactNode
+    open?: boolean
+    setOpen?: (open: boolean) => void
+}
+
+type DialogToUseProps = BaseDialogProps & {
     title: string
     description?: string
     content: ReactNode
-    open?: boolean
-    setOpen?: (open: boolean) => void
+    
 }
 
 const DialogToUse = ({
