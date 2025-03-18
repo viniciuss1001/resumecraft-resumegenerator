@@ -1,3 +1,4 @@
+import { ButtonChangeTheme } from "@/components/darkmode/ButtonChangeTheme"
 import NavItensComponent from "@/components/pages/dashboard/NavItens"
 import UserDropdownComponent from "@/components/pages/dashboard/UserDropDown"
 import Image from "next/image"
@@ -17,11 +18,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 <NavItensComponent />
 
                 <div 
-                className="w-full mt-auto border-t border-muted px-3 py-4 items-center justify-between gap-2">
+                className="w-full mt-auto border-t border-muted px-3 py-4 flex items-center justify-between gap-2">
                     <UserDropdownComponent />
+                    <ButtonChangeTheme/>
                 </div>
             </aside>
-            <main>
+            <main className="p-6 flex flex-col w-full h-full overflow-auto">
                 {children}
             </main>
         </div>
