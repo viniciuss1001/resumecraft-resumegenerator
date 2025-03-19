@@ -23,6 +23,13 @@ const BasicInforesume = () => {
                 className="mb-2 "
                 />
             </div>
+            <InputField label="Nome Completo" name="content.infos.fullName" />
+            <InputField label="Cabeçalho" name="content.infos.headline" />
+            <InputField label="Email" name="content.infos.email" />
+            <InputField label="Site" name="content.infos.website" />
+            <InputField label="Telefone" name="content.infos.phone" />
+            <InputField label="Localização" name="content.infos.location" />
+              
         </div>
     </div>
   )
