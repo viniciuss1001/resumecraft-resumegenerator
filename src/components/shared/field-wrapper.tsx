@@ -1,13 +1,15 @@
+import { cn } from "@/lib/utils"
 import { Label } from "../ui/label"
 
 type FieldWrapperProps = {
     label: string
     children: React.ReactNode
+    className?: string
 }
 
-const FieldWrapperComponent = ({label, children}: FieldWrapperProps) => {
+const FieldWrapperComponent = ({label,className, children}: FieldWrapperProps) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn("flex flex-col gap-2", className)}>
         <Label>
             {label}
         </Label>

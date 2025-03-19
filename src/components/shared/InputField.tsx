@@ -5,10 +5,11 @@ import FieldWrapperComponent from "./field-wrapper"
 
 type InputFieldProps = ComponentProps <typeof Input> & {
   label: string, 
-  name: string
+  name: string,
+  containerClassName?: string,
 }
 
-const InputField = ({label, name, required, ...props}:InputFieldProps) => {
+const InputField = ({label, name, required,containerClassName, ...props}:InputFieldProps) => {
     const {control} = useFormContext()
   return (
     <Controller 
@@ -18,7 +19,7 @@ const InputField = ({label, name, required, ...props}:InputFieldProps) => {
       }}
       name={name}
       render={({field, fieldState}) => (
-        <FieldWrapperComponent label={label}>
+        <FieldWrapperComponent label={label} className={containerClassName}>
           <Input {...props} {...field} />
           {fieldState.error && (
             <span className='text-red-500 text-sm'>
