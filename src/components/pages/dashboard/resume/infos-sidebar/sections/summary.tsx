@@ -18,6 +18,7 @@ const SummaryComponent = () => {
         render={({field}) => (
             <EditorComponent
             {...field} 
+            className='min-h-[200px] max-h-[300px] mt-4'
             />
         )}
         />
