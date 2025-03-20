@@ -4,6 +4,7 @@ import Logo from '@/../public/logo.svg'
 import AiGeneratorBtnDropDown from "./ai-generator"
 import { Separator } from "@/components/ui/separator"
 import BasicInforesume from "./sections/basic-info"
+import SummaryComponent from "./sections/summary"
 
 const InfoSidebarComponent = () => {
   return (
@@ -17,6 +18,8 @@ const InfoSidebarComponent = () => {
         </div>
         <Separator className="my-5"/>
         <BasicInforesume />
+        <Separator className="my-5"/>
+        <SummaryComponent /> 
     </aside>
   )
 }
