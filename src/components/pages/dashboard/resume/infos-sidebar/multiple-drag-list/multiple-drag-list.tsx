@@ -4,6 +4,7 @@ import { GripVertical, LucideIcon } from "lucide-react"
 import SectionTitleComponent from "../section-title"
 import { useFieldArray, useFormContext } from "react-hook-form"
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
+import { cn } from "@/lib/utils"
 
 export type ResumeArrayKeys = Exclude<keyof ResumeContentData, "image" | "infos" | "summary">
 
@@ -33,8 +34,9 @@ const MultipleDragListComponent = ({
         name: `content.${data.formKey}`
     })
 
-    const handleDrag = () => {
-        console.log("drag")
+    const handleDrag = ({source, destination}: DropResult) => {
+        if(!destination) return
+        move(source.index, destination.index)
     }
 
     return (
@@ -54,6 +56,13 @@ const MultipleDragListComponent = ({
                                     className="roudend overflow-hidden border border-muted"
                                 >
                                     {fields.map((field, index) => {
+                                        const titleKey = data.titleKey as keyof typeof field
+                                        const descriptionKey = data.descriptionKey as keyof typeof field
+
+                                        const isLastItem = index === fields.length - 1
+
+
+
                                         return (
                                             <Draggable
                                                 key={`draggable-item-${data.formKey}-${index}`}
@@ -65,7 +74,10 @@ const MultipleDragListComponent = ({
                                                     <div key={field.id}
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
-                                                        className="h-16 w-full bg-muted/50 flex"
+                                                        className={cn(
+                                                            "h-16 w-full bg-muted/50 flex",
+                                                            !isLastItem && "border-b border-muted"
+                                                        )}
                                                     >
                                                         <div
                                                             {...provided.dragHandleProps}
@@ -77,10 +89,10 @@ const MultipleDragListComponent = ({
                                                         </div>
                                                         <div className="flex-1 flex flex-col justify-center px-3 cursor-pointer hover:bg-muted/80 transition-all">
                                                             <p className="text-sm font-title font-bold">
-                                                                Title
+                                                                {field[titleKey]}
                                                             </p>
                                                             <p className="text-xs text-muted-foreground">
-                                                                description
+                                                                {field[descriptionKey]}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -89,6 +101,7 @@ const MultipleDragListComponent = ({
                                             </Draggable>
                                         )
                                     })}
+                                    {provided.placeholder}
                                 </div>
                             )}
                         </Droppable>
