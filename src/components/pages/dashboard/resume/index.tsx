@@ -8,6 +8,7 @@ import InfoSidebarComponent from "./infos-sidebar/infos-sidebar"
 import ResumeContentComponent from "./resume-content/resume-content"
 import StructureSidebarComponent from "./structure-sidebar/structure-sidebar"
 import { FormProvider, useForm } from "react-hook-form"
+import { ResumeData } from "@/@types/types"
 
 const ResumePage = () => {
 
@@ -18,17 +19,26 @@ const ResumePage = () => {
         visible: true
       },
       infos: {
-        email:'',
+        email: '',
         fullName: '',
-        headline: '', 
+        headline: '',
         location: '',
         phone: '',
         website: ''
-      }
+      },
+      summary: "",
+      certifications: [],
+      educations: [],
+      experiences: [],
+      languages: [],
+      projects: [],
+      skills: [],
+      socialMedias: []
+
     }
   }
 
-  const methods = useForm<ResumeData>({defaultValues})
+  const methods = useForm<ResumeData>({ defaultValues })
 
   return (
     <main className='w-full h-screen overflow-hidden'>

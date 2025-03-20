@@ -5,6 +5,7 @@ import AiGeneratorBtnDropDown from "./ai-generator"
 import { Separator } from "@/components/ui/separator"
 import BasicInforesume from "./sections/basic-info"
 import SummaryComponent from "./sections/summary"
+import MultiplesSectionsComponent from "./sections/multiples"
 
 const InfoSidebarComponent = () => {
   return (
@@ -20,6 +21,8 @@ const InfoSidebarComponent = () => {
         <BasicInforesume />
         <Separator className="my-5"/>
         <SummaryComponent /> 
+        <Separator className="my-5" />
+        <MultiplesSectionsComponent />
     </aside>
   )
 }
