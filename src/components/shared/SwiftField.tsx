@@ -1,7 +1,4 @@
-import { Input } from "../ui/input"
-import { ComponentProps } from "react"
 import {Controller, useFormContext} from 'react-hook-form'
-import FieldWrapperComponent from "./field-wrapper"
 import { Switch } from "../ui/switch"
 import { cn } from "@/lib/utils"
 
