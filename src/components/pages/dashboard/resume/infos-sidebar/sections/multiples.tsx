@@ -4,9 +4,15 @@ import React, { Fragment, useState } from 'react'
 import MultipleDragListComponent, { MultipleDragItemData } from '../multiple-drag-list/multiple-drag-list';
 import { Separator } from '@/components/ui/separator';
 import ManageMultipleItemDialog from '../multiple-drag-list/manage-dialog';
+import { useFormContext } from 'react-hook-form';
 
 const MultiplesSectionsComponent = () => {
+
+  const {getValues} = useFormContext()
+
   const [sectionToAdd, setSectionToAdd] = useState<MultipleDragItemData | null>()
+
+  const [initialData, setInitialData] = useState<MultipleDragItemData | null>(null)
 
     const sectionsKeys: MultipleDragItemData[] = [
         {
@@ -59,6 +65,14 @@ const MultiplesSectionsComponent = () => {
           descriptionKey: "description",
         },
       ];
+
+      const onEdit = (section: MultipleDragItemData, index: number) => {
+        const currentValues = getValues()
+        const currentItens = currentValues.content[section.formKey]
+
+        setSectionToAdd(section)
+        setInitialData(currentItens[index])
+      }
   return (
     <div>
       {sectionsKeys.map((section, index) => (
@@ -67,17 +81,21 @@ const MultiplesSectionsComponent = () => {
           <MultipleDragListComponent 
           data={section}
           onAdd={() => setSectionToAdd(section)}
-          onEdit={(index) => {}}
+          onEdit={(index) => onEdit(section, index)}
           />
         </Fragment>
         ))}
 
         {sectionToAdd && (
           <ManageMultipleItemDialog 
+          initialData={initialData}
           data={sectionToAdd}
           open={!!sectionToAdd}
           setOpen={(value) => {
-            if(!value) setSectionToAdd(null)
+            if(!value){
+              setSectionToAdd(null)
+              setInitialData(null)
+            }
           }}
           />
         )}

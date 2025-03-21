@@ -6,6 +6,8 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
 
 export type ResumeArrayKeys = Exclude<keyof ResumeContentData, "image" | "infos" | "summary">
 
@@ -35,8 +37,8 @@ const MultipleDragListComponent = ({
         name: `content.${data.formKey}`
     })
 
-    const handleDrag = ({source, destination}: DropResult) => {
-        if(!destination) return
+    const handleDrag = ({ source, destination }: DropResult) => {
+        if (!destination) return
         move(source.index, destination.index)
     }
 
@@ -61,6 +63,7 @@ const MultipleDragListComponent = ({
                         <Droppable droppableId={`droppable-${data.formKey}`} >
                             {(provided) => (
                                 <div
+
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                     className="roudend overflow-hidden border border-muted"
@@ -71,14 +74,12 @@ const MultipleDragListComponent = ({
 
                                         const isLastItem = index === fields.length - 1
 
-
-
                                         return (
                                             <Draggable
                                                 key={`draggable-item-${data.formKey}-${index}`}
                                                 draggableId={`draggable-item-${data.formKey}-${index}`}
                                                 index={index}
-                                                
+
                                             >
                                                 {(provided) => (
                                                     <div key={field.id}
@@ -95,16 +96,29 @@ const MultipleDragListComponent = ({
                                                             hover:brightness-125 transition-all
                                                             "
                                                         >
-                                                            <GripVertical size={14}/>
+                                                            <GripVertical size={14} />
                                                         </div>
-                                                        <div className="flex-1 flex flex-col justify-center px-3 cursor-pointer hover:bg-muted/80 transition-all">
-                                                            <p className="text-sm font-title font-bold">
-                                                                {field[titleKey]}
-                                                            </p>
-                                                            <p className="text-xs text-muted-foreground">
-                                                                {field[descriptionKey]}
-                                                            </p>
-                                                        </div>
+                                                        <TooltipProvider>
+                                                            <Tooltip>
+                                                                <TooltipTrigger className="flex h-full w-full">
+                                                                    <div
+                                                                        onClick={() => onEdit(index)}
+                                                                        className="flex-1 flex flex-col justify-center px-3 cursor-pointer hover:bg-muted/80 transition-all">
+                                                                        <p className="text-sm font-title font-bold">
+                                                                            {field[titleKey]}
+                                                                        </p>
+                                                                        <p className="text-xs text-muted-foreground">
+                                                                            {field[descriptionKey]}
+                                                                        </p>
+                                                                    </div>
+                                                                </TooltipTrigger>
+                                                                <TooltipContent>
+                                                                    <p className="text-xs text-muted-foreground">
+                                                                        Editar {field[titleKey]}
+                                                                    </p>
+                                                                </TooltipContent>
+                                                            </Tooltip>
+                                                        </TooltipProvider>
                                                     </div>
                                                 )}
 
@@ -117,6 +131,15 @@ const MultipleDragListComponent = ({
                         </Droppable>
                     </DragDropContext>
                 )}
+
+                {!isEmpty && (
+                    <Button variant='outline' className="w-max ml-auto mt-auto gap-2" onClick={onAdd}>
+                        <Plus size={14} />
+                        Adicionar Item
+                    </Button>
+                )}
+
+
             </div>
         </div>
     )
