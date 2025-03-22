@@ -1,4 +1,4 @@
-"use client"
+//"use client"
 import { BicepsFlexed, BriefcaseBusiness, FileBadge2, Globe, GraduationCap, Languages, Share2 } from 'lucide-react';
 import React, { Fragment, useState } from 'react'
 import MultipleDragListComponent, { MultipleDragItemData } from '../multiple-drag-list/multiple-drag-list';

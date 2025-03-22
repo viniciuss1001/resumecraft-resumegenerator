@@ -1,4 +1,4 @@
-"use client"
+//"use client"
 import { MultipleDragItemData, ResumeArrayKeys } from './multiple-drag-list'
 import DialogToUse, { BaseDialogProps } from '@/components/shared/Estructural-dialog'
 import { ResumeData } from '@/@types/types'
@@ -244,9 +244,18 @@ const ManageMultipleItemDialog = ({
 
   const isEditing = !!initialData
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (initialData) methods.reset(initialData)
   }, [initialData, methods])
+*/
+  //inicio chat
+  useEffect(() => {
+    if (initialData) {
+      methods.reset(initialData)
+    }
+  }, [initialData])
+
+  //fim chat
 
 
   const formContent = useMemo(() => {
@@ -314,13 +323,11 @@ const ManageMultipleItemDialog = ({
     const currentFieldValue = currentValues.content[formKey] ?? []
 
     if (isEditing) {
-
-      const updatedItems = currentFieldValue.map((item: any) => {
-        if (item.id === initialData.id) {
-          return formData
-        }
-        return item
-      })
+      //chat gpt
+      const updatedItems = currentFieldValue.map(
+        (item: any) => item.id === initialData?.id ? { ...item, ...FormData } : item
+      )
+      //fim chat
 
       setValue(`content.${formKey}`, updatedItems)
       setOpen(false)
@@ -328,7 +335,7 @@ const ManageMultipleItemDialog = ({
       return
     }
 
-    setValue(`content.${formKey}`, [currentFieldValue, {
+    setValue(`content.${formKey}`, [...currentFieldValue, {
       ...formData,
       id: uuid()
     }])

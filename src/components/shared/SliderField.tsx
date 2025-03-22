@@ -1,6 +1,4 @@
 import {Controller, useFormContext} from 'react-hook-form'
-import { Switch } from "../ui/switch"
-import { cn } from "@/lib/utils"
 import FieldWrapperComponent from './field-wrapper'
 import { Slider } from '../ui/slider'
 

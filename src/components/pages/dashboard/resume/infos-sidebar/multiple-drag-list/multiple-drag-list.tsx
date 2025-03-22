@@ -63,7 +63,6 @@ const MultipleDragListComponent = ({
                         <Droppable droppableId={`droppable-${data.formKey}`} >
                             {(provided) => (
                                 <div
-
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                     className="roudend overflow-hidden border border-muted"
@@ -76,8 +75,8 @@ const MultipleDragListComponent = ({
 
                                         return (
                                             <Draggable
-                                                key={`draggable-item-${data.formKey}-${index}`}
-                                                draggableId={`draggable-item-${data.formKey}-${index}`}
+                                                key={`${data.formKey} - ${index}`}
+                                                draggableId={`${data.formKey}-${index}`}
                                                 index={index}
 
                                             >
