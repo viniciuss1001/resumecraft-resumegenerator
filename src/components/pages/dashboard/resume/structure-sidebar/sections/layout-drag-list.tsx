@@ -58,7 +58,7 @@ const labels: Record<ResumeSections, Record<ResumeLanguage, string>> = {
 		italian: "Abilità",
 		spanish: "Habilidades",
 	},
-	socialMedia: {
+	socialMedias: {
 		portuguese: "Redes Sociais",
 		english: "Social Medias",
 		french: "Réseaux Sociaux",
@@ -75,6 +75,8 @@ const labels: Record<ResumeSections, Record<ResumeLanguage, string>> = {
 		spanish: "Resumen",
 	},
 };
+
+export const sectionLabels = labels
 
 const LayoutDragListComponent = ({ title, fields }: LayoutDragListComponentProps) => {
 

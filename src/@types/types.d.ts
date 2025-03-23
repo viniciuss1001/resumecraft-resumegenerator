@@ -84,7 +84,7 @@ type ResumeLayoutSection = {
     key: ResumeSections
 }
 
-type ResumeSections = "summary" | "socialMedia" | "experiences" | "educations" | "skills" | "languages" | "certifications" | "projects"
+type ResumeSections = "summary" | "socialMedias" | "experiences" | "educations" | "skills" | "languages" | "certifications" | "projects"
 
 type ResumeLanguage = "portuguese" | "spanish" | "french" | "german" | "italian" | "english"
 

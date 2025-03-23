@@ -42,7 +42,7 @@ const ResumePage = () => {
       language: "portuguese",
       layout: {
         mainSections: [
-          { key: "socialMedia" },
+          { key: "socialMedias" },
           { key: "summary" },
           { key: "experiences" },
           { key: "educations" },
