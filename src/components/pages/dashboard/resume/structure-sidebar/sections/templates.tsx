@@ -4,7 +4,6 @@ import { ResumeData, ResumeTemplates } from "@/@types/types"
 import { Controller, useFormContext } from "react-hook-form"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import image from '../../../../../../../public/templates/ditto.webp'
 
 const allTemplates: ResumeTemplates[] = ["ditto", "eevee", "jynx", "onix"]
 

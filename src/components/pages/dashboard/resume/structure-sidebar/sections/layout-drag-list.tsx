@@ -104,7 +104,7 @@ const LayoutDragListComponent = ({ title, fields }: LayoutDragListComponentProps
 							>
 								<GripVertical className="w-4 h-4 min-w-4 text-background" />
 								<p className="text-accent text-xs font-semibold">
-									{labels[field.key][language]}
+									{labels[field.key as ResumeSections][language as ResumeLanguage]}
 								</p>
 							</div>
 						)}

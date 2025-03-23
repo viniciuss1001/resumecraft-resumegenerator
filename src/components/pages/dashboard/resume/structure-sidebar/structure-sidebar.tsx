@@ -1,4 +1,3 @@
-import React from 'react'
 import TemplatesListSectionComponent from './sections/templates'
 import { Separator } from '@/components/ui/separator'
 import LayoutSectionComponent from './sections/layout-section'

@@ -1,4 +1,3 @@
-import React from 'react'
 import SectionTitleComponent from '../../infos-sidebar/section-title'
 import { Palette } from 'lucide-react'
 import { Controller, useFormContext } from 'react-hook-form'
@@ -15,7 +14,6 @@ const keysToIgnore = [
 const colorsKey = Object.keys(colors).filter((key) => !keysToIgnore.includes(key)) as (keyof typeof colors)[]
 
 const ResumeThemeComponent = () => {
-	console.log(colorsKey)
 
 	const { control } = useFormContext<ResumeData>()
 
@@ -29,6 +27,7 @@ const ResumeThemeComponent = () => {
 				render={({ field }) => (
 					<div className='grid grid-cols-8 gap-4 mt-4'>
 						{colorsKey.map(colorKey => {
+							console.log(colorKey, colors[colorKey])
 
 							const isSelected = field.value === colorKey
 
@@ -41,13 +40,8 @@ const ResumeThemeComponent = () => {
 
 									)}
 									onClick={() => field.onChange(colorKey)}
-								>
-									<div
-										className="w-full h-full rounded-full"
-										style={{ backgroundColor: colors[colorKey][500] }}
-									/>
-
-								</Button>
+									style={{backgroundColor: colors[colorKey]?.[500] }}
+								/>
 							)
 						})}
 					</div>
