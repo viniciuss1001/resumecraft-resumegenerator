@@ -86,7 +86,7 @@ type ResumeLayoutSection = {
 
 type ResumeSections = "summary" | "socialMedia" | "experiences" | "educations" | "skills" | "languages" | "certifications" | "projects"
 
-type ResumeLanguage = "portuguese" | "spanish" | "french" | "german" | "italian"
+type ResumeLanguage = "portuguese" | "spanish" | "french" | "german" | "italian" | "english"
 
 type ResumeStructureData = {
     template: ResumeTemplates
