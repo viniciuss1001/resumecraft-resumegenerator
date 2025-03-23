@@ -27,7 +27,6 @@ const ResumeThemeComponent = () => {
 				render={({ field }) => (
 					<div className='grid grid-cols-8 gap-4 mt-4'>
 						{colorsKey.map(colorKey => {
-							console.log(colorKey, colors[colorKey])
 
 							const isSelected = field.value === colorKey
 
