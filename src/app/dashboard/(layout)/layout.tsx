@@ -1,13 +1,16 @@
 import { ButtonChangeTheme } from "@/components/darkmode/ButtonChangeTheme"
 import NavItensComponent from "@/components/pages/dashboard/NavItens"
 import UserDropdownComponent from "@/components/pages/dashboard/UserDropDown"
+import { auth } from "@/lib/auth"
 import Image from "next/image"
 
 interface DashboardLayoutProps {
     children: React.ReactNode
 }
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+const DashboardLayout = async({ children }: DashboardLayoutProps) => {
+    const session = await auth()
+
     return (
         <div className="w-full h-screen overflow-hidden grid grid-cols-[300px,1fr]">
             <aside className="w-full h-full flex flex-col items-center border-r border-muted">
@@ -19,7 +22,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
                 <div 
                 className="w-full mt-auto border-t border-muted px-3 py-4 flex items-center justify-between gap-2">
-                    <UserDropdownComponent />
+                    <UserDropdownComponent user={session?.user}/>
                     <ButtonChangeTheme/>
                 </div>
             </aside>
