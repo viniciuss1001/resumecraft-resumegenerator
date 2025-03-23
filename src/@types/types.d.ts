@@ -79,8 +79,28 @@ type ResumeInfosData = {
     phone: string
     location: string
 }
+type ResumeLayoutSection = {
+    id?: string
+    key: ResumeSections
+}
+
+type ResumeSections = "summary" | "socialMedia" | "experiences" | "educations" | "skills" | "languages" | "certifications" | "projects"
+
+type ResumeLanguage = "portuguese" | "spanish" | "french" | "german" | "italian"
+
+type ResumeStructureData = {
+    template: ResumeTemplates
+    colorTheme: string
+    layout: {
+        mainSections: ResumeLayoutSection[],
+        sidebarSections: ResumeLayoutSection[]
+    }
+    language: ResumeLanguage
+}
 
 export type ResumeData = {
     content: ResumeContentData;
-    //structure: ResumeStructureData;
+    structure: ResumeStructureData;
 }
+
+type ResumeTemplates = "eevee" | "onix" | "jynx" | "ditto"

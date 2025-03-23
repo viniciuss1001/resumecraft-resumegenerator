@@ -12,7 +12,7 @@ import { ResumeData } from "@/@types/types"
 
 const ResumePage = () => {
 
-  const defaultValues = {
+  const defaultValues: ResumeData = {
     content: {
       image: {
         url: '',
@@ -35,6 +35,25 @@ const ResumePage = () => {
       skills: [],
       socialMedias: []
 
+    },
+    structure: {
+      template: "ditto",
+      colorTheme: "slate",
+      language: "portuguese",
+      layout: {
+        mainSections: [
+          { key: "socialMedia" },
+          { key: "summary" },
+          { key: "experiences" },
+          { key: "educations" },
+          { key: "certifications" },
+          { key: "projects" }
+        ],
+        sidebarSections: [
+          { key: "languages" },
+          { key: "skills" }
+        ]
+      }
     }
   }
 
