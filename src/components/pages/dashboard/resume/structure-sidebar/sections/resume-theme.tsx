@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 import colors from 'tailwindcss/colors'
+import { useCallback, useEffect } from 'react'
 
 const keysToIgnore = [
 	"current", "inherit", "currentColor", "transparent", "black", "white", "neutral"
@@ -15,7 +16,24 @@ const colorsKey = Object.keys(colors).filter((key) => !keysToIgnore.includes(key
 
 const ResumeThemeComponent = () => {
 
-	const { control } = useFormContext<ResumeData>()
+	const { control, watch } = useFormContext<ResumeData>()
+
+	const currentColorTheme = watch("structure.colorTheme")
+
+	const handleSetCssVariables = useCallback(() => {
+		if(!currentColorTheme) return
+
+		const colorKey = currentColorTheme as keyof typeof colors
+
+		document.documentElement.style.setProperty(
+			"--resume-primary",
+			colors[colorKey][500]
+		)
+	}, [currentColorTheme])
+
+	useEffect(() => {
+		handleSetCssVariables()
+	},[handleSetCssVariables])
 
 	return (
 		<div>
