@@ -6,7 +6,6 @@ import TextAlign from '@tiptap/extension-text-align'
 import { cn } from '@/lib/utils'
 import MenuBarEditorComponent from './menu-bar'
 
-
 type EditorComponentProps = {
     value: string
     onChange?: (value: string) => void
@@ -49,7 +48,8 @@ const EditorComponent = ({
         onUpdate({ editor }) {
             onChange?.(editor.getHTML())
         },
-        autofocus: false
+        autofocus: false,
+        immediatelyRender: false
     })
 
 
@@ -60,7 +60,7 @@ const EditorComponent = ({
         )}>
             <MenuBarEditorComponent editor={editor}/>
             <div className='h-full [&div]:h-full flex flex-col overflow-y-auto'>
-                <EditorContent editor={editor} />
+                <EditorContent editor={editor}/>
             </div>
         </div>
     )

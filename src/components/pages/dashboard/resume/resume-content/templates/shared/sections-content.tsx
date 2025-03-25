@@ -76,6 +76,7 @@ export const ResumeSectionContent = ({
             >
               {socialMedia.icon ? (
                 <img
+                alt=""
                   className="w-3 h-3 object-contain"
                   src={`https://cdn.simpleicons.org/${socialMedia.icon}`}
                 />

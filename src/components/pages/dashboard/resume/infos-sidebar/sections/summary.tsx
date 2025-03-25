@@ -11,7 +11,6 @@ const SummaryComponent = () => {
   return (
     <div>
         <SectionTitleComponent title='Sobre Você' icon={ScrollText}/>
-
         <Controller
         control={control}
         name='content.summary'
