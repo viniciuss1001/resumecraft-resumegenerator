@@ -7,9 +7,13 @@ import ResumeContentHeader from './templates/header'
 import { useFormContext } from 'react-hook-form'
 import { ResumeData } from '@/@types/types'
 
-const ResumeContentComponent = () => {
+type ResumeContentProps = {
+  title: string
+}
 
-  const {watch} = useFormContext<ResumeData>()
+const ResumeContentComponent = ({ title }: ResumeContentProps) => {
+
+  const { watch } = useFormContext<ResumeData>()
 
   const data = watch()
 
@@ -23,10 +27,10 @@ const ResumeContentComponent = () => {
         limitToBounds={false}
       >
         <>
-        <ResumeContentHeader />
-        <TransformControls />
+          <ResumeContentHeader title={title}/>
+          <TransformControls />
           <TransformComponent>
-            <ResumeTemplate data={data}/>
+            <ResumeTemplate data={data} />
           </TransformComponent>
         </>
 

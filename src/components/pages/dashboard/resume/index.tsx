@@ -14,9 +14,11 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useCallback, useEffect, useRef } from "react"
 import { updateResumeData } from "@/db/actions"
 import { useParams } from "next/navigation"
+import { mergician } from 'mergician'
+
 
 type ResumePageProps = {
-  title: string, 
+  title: string,
   initialData: Partial<ResumeData>
   user?: User
 }
@@ -72,7 +74,9 @@ const ResumePage = ({
   const params = useParams()
   const resumeId = params.id as string
 
-  const methods = useForm<ResumeData>({ defaultValues })
+  const methods = useForm<ResumeData>({ 
+    defaultValues: mergician(defaultValues, initialData)
+  })
 
   const data = methods.watch()
   const debouncedData = useDebounce(JSON.stringify(data))
@@ -80,7 +84,7 @@ const ResumePage = ({
 
   const handleSaveUpdate = useCallback(() => {
     try {
-      if(!shouldSave.current){
+      if (!shouldSave.current) {
         shouldSave.current = true
         return
       }
@@ -88,7 +92,8 @@ const ResumePage = ({
 
       updateResumeData(resumeId, updatedData)
       console.log("salvo no banco")
-    } catch (error) { 
+
+    } catch (error) {
       console.log(error)
     }
   }, [methods, resumeId])
@@ -106,7 +111,7 @@ const ResumePage = ({
           </ResizablePanel>
           <ResizableHandle withHandle /> {/*panel resize*/}
           <ResizablePanel>
-            <ResumeContentComponent />
+            <ResumeContentComponent title={title}/>
           </ResizablePanel>
           <ResizableHandle withHandle /> {/*panel resize*/}
           <ResizablePanel minSize={20} maxSize={35} defaultSize={25}>
