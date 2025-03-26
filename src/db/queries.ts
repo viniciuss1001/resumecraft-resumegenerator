@@ -18,3 +18,17 @@ export const getResumes = cache(async (): Promise<ResumeDto[]> => {
 
 	return userResumes
 })
+
+export const getResumeById = cache(async (id: string): Promise<ResumeDto | undefined> => {
+	const session = await auth()
+
+	const userId = session?.user?.id
+
+	if (!userId) return undefined
+
+	const resume = await db.query.resumes.findFirst({
+		where: eq(resumes.id, id)
+	})
+
+	return resume
+})

@@ -9,24 +9,37 @@ import ResumeContentComponent from "./resume-content/resume-content"
 import StructureSidebarComponent from "./structure-sidebar/structure-sidebar"
 import { FormProvider, useForm } from "react-hook-form"
 import { ResumeData } from "@/@types/types"
+import { User } from "next-auth"
+import { useDebounce } from "@/hooks/use-debounce"
+import { useCallback, useEffect, useRef } from "react"
+import { updateResumeData } from "@/db/actions"
+import { useParams } from "next/navigation"
 
-const ResumePage = () => {
+type ResumePageProps = {
+  title: string, 
+  initialData: Partial<ResumeData>
+  user?: User
+}
+
+const ResumePage = ({
+  title, initialData, user
+}: ResumePageProps) => {
 
   const defaultValues: ResumeData = {
     content: {
+      summary: '<p></p>',
       image: {
-        url: '',
+        url: user?.image ?? '',
         visible: true
       },
       infos: {
-        email: '',
-        fullName: '',
+        email: user?.email ?? '',
+        fullName: user?.name ?? '',
         headline: '',
         location: '',
         phone: '',
         website: ''
       },
-      summary: "",
       certifications: [],
       educations: [],
       experiences: [],
@@ -56,8 +69,33 @@ const ResumePage = () => {
       }
     }
   }
+  const params = useParams()
+  const resumeId = params.id as string
 
   const methods = useForm<ResumeData>({ defaultValues })
+
+  const data = methods.watch()
+  const debouncedData = useDebounce(JSON.stringify(data))
+  const shouldSave = useRef(false)
+
+  const handleSaveUpdate = useCallback(() => {
+    try {
+      if(!shouldSave.current){
+        shouldSave.current = true
+        return
+      }
+      const updatedData = methods.getValues()
+
+      updateResumeData(resumeId, updatedData)
+      console.log("salvo no banco")
+    } catch (error) { 
+      console.log(error)
+    }
+  }, [methods, resumeId])
+
+  useEffect(() => {
+    handleSaveUpdate()
+  }, [debouncedData, handleSaveUpdate])
 
   return (
     <main className='w-full h-screen overflow-hidden'>
