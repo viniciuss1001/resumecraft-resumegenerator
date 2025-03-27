@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Copy, Download, Home, Trash } from "lucide-react"
+import { Copy, Download, Home } from "lucide-react"
 import Link from "next/link"
 
 import { ReactNode, useState } from "react"
 import DeleteResumeDialog from "../delete-resume-dialog"
+import DuplicateResumeDialog from "../duplicate-resume-dialog"
 
 type ResumeContentHeaderProps = {
 	title: string
@@ -14,7 +15,6 @@ type ResumeContentHeaderProps = {
 }
 
 const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
-
 
 	return (
 		<header className="absolute w-full left-0 top-0 z-10 p-2 bg-background border-b border-muted flex items-center justify-between gap-2">
@@ -44,17 +44,23 @@ const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 			</div>
 			<div className="flex gap-1">
 				{/*Delete Dialog */}
-				<DeleteResumeDialog />
+				<TooltipProvider>
+					<Tooltip>
+						<TooltipTrigger >
+							<DeleteResumeDialog />
+						</TooltipTrigger>
+						<TooltipContent>
+							<p className="text-xs ">
+								Deletar currículo
+							</p>
+						</TooltipContent>
+					</Tooltip>
+				</TooltipProvider>
+				{/*duplicate resume dialog */}
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger>
-							<Button
-								variant='secondary'
-								className="w-8 h-8 bg-transparent"
-								size='icon'
-							>
-								<Copy size={18} />
-							</Button>
+							<DuplicateResumeDialog />
 						</TooltipTrigger>
 						<TooltipContent>
 							<p className="text-xs text-muted-foreground">Duplicar Currículo</p>

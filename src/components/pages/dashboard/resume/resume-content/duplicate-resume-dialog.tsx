@@ -1,0 +1,83 @@
+"use client"
+import DialogToUse, { BaseDialogProps } from '@/components/shared/Estructural-dialog'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { deleteResumeData, duplicateResume } from '@/db/actions'
+import { DialogClose } from '@radix-ui/react-dialog'
+import { Copy } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import React from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+
+type FormData = {
+	title: string
+}
+
+const DuplicateResumeDialog = (props: BaseDialogProps) => {
+	const methods = useForm<FormData>()
+	const params = useParams()
+	const router = useRouter()
+
+	const resumeId = params.id as string
+
+	const onSubmit = async (data: FormData) => {
+		try {
+			const newResume = await duplicateResume(resumeId, data.title)
+
+
+			toast.success("Currículo duplicado com sucesso.")
+			router.push(`/dashboard/resumes/${newResume.id}`)
+
+		} catch (error) {
+			console.log(error)
+			toast.error("Erro ao duplicar o currículo. Tente novamente.")
+		}
+	}
+
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button variant='ghost' className="flex items-center justify-center">
+					<Copy />
+				</Button>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogHeader className='m-2 gap-2'>
+					<DialogTitle className='m-1 font-title'>
+						Duplicar Currículo
+					</DialogTitle>
+					<DialogDescription className='text-xs text-foreground'>
+						Criar um novo currículo igual esse.
+					</DialogDescription>
+				</DialogHeader>
+
+				<form onSubmit={methods.handleSubmit(onSubmit)}>
+					<Controller
+						control={methods.control}
+						name='title'
+						rules={{ required: 'Campo Obrigatório' }}
+						render={({ field }) => (
+							<Input placeholder='Novo Título' required {...field} />
+						)}
+					/>
+					<DialogFooter className='flex gap-2 justify-between mt-5'>
+						<DialogClose>
+							<Button type='button' variant='ghost'>
+								Cancelar
+							</Button>
+						</DialogClose>
+						<Button variant='default' type='submit'>
+							Duplicar
+						</Button>
+					</DialogFooter>
+				</form>
+
+			</DialogContent>
+		</Dialog>
+
+	)
+}
+
+export default DuplicateResumeDialog
