@@ -3,11 +3,19 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Copy, Download, Home, Trash } from "lucide-react"
 import Link from "next/link"
 
+import { ReactNode, useState } from "react"
+import DeleteResumeDialog from "../delete-resume-dialog"
+
 type ResumeContentHeaderProps = {
 	title: string
+	children?: ReactNode
+	open?: boolean
+	setOpen?: (open: boolean) => void
 }
 
-const ResumeContentHeader = ({ title }: ResumeContentHeaderProps) => {
+const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
+
+
 	return (
 		<header className="absolute w-full left-0 top-0 z-10 p-2 bg-background border-b border-muted flex items-center justify-between gap-2">
 			<div className="flex items-center gap-2">
@@ -31,26 +39,13 @@ const ResumeContentHeader = ({ title }: ResumeContentHeaderProps) => {
 				</TooltipProvider>
 				<span className="text-muted-foreground">/</span>
 				<p className="text-lg font-title font-bold ml-1">
-					{title}
+					{props.title}
 				</p>
 			</div>
 			<div className="flex gap-1">
+				{/*Delete Dialog */}
+				<DeleteResumeDialog />
 				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger>
-							<Button
-								variant='secondary'
-								className="w-8 h-8 bg-transparent"
-								size='icon'
-							>
-								<Trash size={18} />
-							</Button>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p className="text-xs text-muted-foreground">Deletar Currículo</p>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider><TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger>
 							<Button
