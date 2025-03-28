@@ -28,7 +28,7 @@ const ResumeContentComponent = ({ title }: ResumeContentProps) => {
       >
         <>
           <ResumeContentHeader title={title}/>
-          <TransformControls />
+          <TransformControls title={title}/>
           <TransformComponent>
             <ResumeTemplate data={data} />
           </TransformComponent>

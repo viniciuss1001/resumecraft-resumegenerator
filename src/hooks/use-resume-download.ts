@@ -1,20 +1,23 @@
+//import {} from '@/services/api'
 import { ResumeData } from "@/@types/types"
 import { api } from "@/lib/axios"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
-export const useResumeDownload = () => {
+export const useResumeDownload = (title?: string) => {
 
 	const { getValues } = useFormContext<ResumeData>()
 
 	const handleDownloadResume = async () => {
 
 		const resume = document.getElementById("resume-content")
+		
+		if (!resume) return
 		const structure = getValues('structure')
 
-		if (!resume) return
-
-		const { data } = await api.post("/resume/download", {
+		const { data } = await api.post(
+			"/resume/download", 
+			{
 			html: resume.outerHTML,
 			structure,
 		}, {
@@ -22,9 +25,10 @@ export const useResumeDownload = () => {
 		})
 
 		const url = window.URL.createObjectURL(data)
+		console.log(url)
 		const link = document.createElement("a")
 		link.href = url
-		link.setAttribute("download", "currículo.pdf")
+		link.setAttribute("download", `${title || "Currículo"}.pdf`)
 		document.body.appendChild(link)
 		link.click()
 		link.remove()

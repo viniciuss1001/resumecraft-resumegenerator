@@ -17,7 +17,7 @@ type ResumeContentHeaderProps = {
 
 const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 
-	const {handleDownloadResume} = useResumeDownload()
+	const { handleDownloadResume } = useResumeDownload(props.title)
 
 	return (
 		<header className="absolute w-full left-0 top-0 z-10 p-2 bg-background border-b border-muted flex items-center justify-between gap-2">

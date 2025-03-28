@@ -1,9 +1,15 @@
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { useResumeDownload } from "@/hooks/use-resume-download"
 import { Download, RotateCcw, ZoomInIcon, ZoomOut } from "lucide-react"
 import { useControls } from "react-zoom-pan-pinch"
 
-const TransformControls = () => {
+type TransformControlsProps = {
+	title: string
+}
+
+const TransformControls = ({title}: TransformControlsProps) => {
+	const { handleDownloadResume } = useResumeDownload(title)
 
 	const { zoomIn, zoomOut, centerView } = useControls()
 
@@ -20,11 +26,12 @@ const TransformControls = () => {
 			icon: RotateCcw,
 			label: "Resetar Posição",
 			onClick: () => centerView(0.5)
-		}, {
-			icon: Download,
-			label: "Baixar PDF",
-			onClick: () => console.log('baixado')
-		}
+		}, 
+		// {
+		// 	icon: Download,
+		// 	label: "Baixar PDF",
+		// 	onClick: () => handleDownloadResume()
+		// }
 	]
 
 	return (
@@ -35,14 +42,15 @@ const TransformControls = () => {
 				<TooltipProvider key={control.label}>
 					<Tooltip key={control.label}>
 						<TooltipTrigger>
-						<Button
-						variant='secondary'
-						className="w-6 h-6 bg-transparent"
-						size='icon'
-						onClick={control.onClick}
-						>
-							<control.icon size={16}/>
-						</Button>
+							<Button
+							asChild
+								variant='secondary'
+								className="w-6 h-6 bg-transparent"
+								size='icon'
+								onClick={control.onClick}
+							>
+								<control.icon size={13} />
+							</Button>
 						</TooltipTrigger>
 						<TooltipContent>
 							{control.label}
