@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ReactNode, useState } from "react"
 import DeleteResumeDialog from "../delete-resume-dialog"
 import DuplicateResumeDialog from "../duplicate-resume-dialog"
+import { useResumeDownload } from "@/hooks/use-resume-download"
 
 type ResumeContentHeaderProps = {
 	title: string
@@ -15,6 +16,8 @@ type ResumeContentHeaderProps = {
 }
 
 const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
+
+	const {handleDownloadResume} = useResumeDownload()
 
 	return (
 		<header className="absolute w-full left-0 top-0 z-10 p-2 bg-background border-b border-muted flex items-center justify-between gap-2">
@@ -67,6 +70,7 @@ const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
+				{/*download pdf */}
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger>
@@ -74,6 +78,7 @@ const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 								variant='secondary'
 								className="w-8 h-8 bg-transparent"
 								size='icon'
+								onClick={handleDownloadResume}
 							>
 								<Download size={18} />
 							</Button>
