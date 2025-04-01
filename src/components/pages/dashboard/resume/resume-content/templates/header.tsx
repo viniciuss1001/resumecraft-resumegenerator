@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Copy, Download, Home } from "lucide-react"
+import { Copy, Download, Home, Loader2 } from "lucide-react"
 import Link from "next/link"
 
 import { ReactNode, useState } from "react"
@@ -17,7 +17,7 @@ type ResumeContentHeaderProps = {
 
 const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 
-	const { handleDownloadResume } = useResumeDownload(props.title)
+	const { handleDownloadResume, isLoading } = useResumeDownload(props.title)
 
 	return (
 		<header className="absolute w-full left-0 top-0 z-10 p-2 bg-background border-b border-muted flex items-center justify-between gap-2">
@@ -79,8 +79,9 @@ const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 								className="w-8 h-8 bg-transparent"
 								size='icon'
 								onClick={handleDownloadResume}
+								disabled={isLoading}
 							>
-								<Download size={18} />
+								{isLoading ? <Loader2 className="animate-spin"/> : <Download size={18} />}
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>

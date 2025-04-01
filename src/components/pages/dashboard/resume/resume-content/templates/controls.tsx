@@ -27,11 +27,6 @@ const TransformControls = ({title}: TransformControlsProps) => {
 			label: "Resetar Posição",
 			onClick: () => centerView(0.5)
 		}, 
-		// {
-		// 	icon: Download,
-		// 	label: "Baixar PDF",
-		// 	onClick: () => handleDownloadResume()
-		// }
 	]
 
 	return (

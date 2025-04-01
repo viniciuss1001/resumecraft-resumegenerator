@@ -1,11 +1,12 @@
 "use client"
-import DialogToUse, { BaseDialogProps } from '@/components/shared/Estructural-dialog'
+import { BaseDialogProps } from '@/components/shared/Estructural-dialog'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { deleteResumeData, duplicateResume } from '@/db/actions'
+import { duplicateResume } from '@/db/actions'
 import { DialogClose } from '@radix-ui/react-dialog'
-import { Copy } from 'lucide-react'
+import { useMutation } from '@tanstack/react-query'
+import { Copy, Loader2 } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -22,18 +23,16 @@ const DuplicateResumeDialog = (props: BaseDialogProps) => {
 
 	const resumeId = params.id as string
 
-	const onSubmit = async (data: FormData) => {
-		try {
-			const newResume = await duplicateResume(resumeId, data.title)
-
-
+	const { mutate: handleDuplicateResume, isPending } = useMutation({
+		mutationFn: (title: string) => duplicateResume(resumeId, title),
+		onSuccess: (newResume) => {
 			toast.success("Currículo duplicado com sucesso.")
 			router.push(`/dashboard/resumes/${newResume.id}`)
-
-		} catch (error) {
-			console.log(error)
-			toast.error("Erro ao duplicar o currículo. Tente novamente.")
 		}
+	})
+
+	const onSubmit = async (data: FormData) => {
+		handleDuplicateResume(data.title)
 	}
 
 	return (
@@ -64,12 +63,16 @@ const DuplicateResumeDialog = (props: BaseDialogProps) => {
 					/>
 					<DialogFooter className='flex gap-2 justify-between mt-5'>
 						<DialogClose>
-							<Button type='button' variant='ghost'>
+							<Button type='button' variant='ghost'
+							disabled={isPending}
+							>
 								Cancelar
 							</Button>
 						</DialogClose>
-						<Button variant='default' type='submit'>
-							Duplicar
+						<Button variant='default' type='submit'
+						disabled={isPending}
+						>
+							{isPending ? <Loader2 className='animate-spin'/> : "Duplicar"}
 						</Button>
 					</DialogFooter>
 				</form>

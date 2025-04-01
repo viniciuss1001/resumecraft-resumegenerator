@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { deleteResumeData } from '@/db/actions'
 import { DialogClose } from '@radix-ui/react-dialog'
-import { Trash } from 'lucide-react'
+import { useMutation } from '@tanstack/react-query'
+import { Loader2, Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
@@ -17,16 +18,16 @@ const DeleteResumeDialog = (props: BaseDialogProps) => {
 
 	const resumeId = params.id as string
 
-	const onDelete = async () => {
-		try {
-			await deleteResumeData(resumeId)
+	const { mutate: handleDeleteResume, isPending } = useMutation({
+		mutationFn: deleteResumeData,
+		onSuccess: () => {
 			toast.success("Currículo deletado com sucesso.")
 			router.push("/dashboard/resumes")
-
-		} catch (error) {
-			console.log(error)
-			toast.error("Erro ao deletar o currículo. Tente novamente.")
 		}
+	})
+
+	const onDelete = async () => {
+		handleDeleteResume(resumeId)
 	}
 
 	return (
@@ -47,12 +48,16 @@ const DeleteResumeDialog = (props: BaseDialogProps) => {
 				</DialogHeader>
 				<DialogFooter className='flex gap-2 justify-between'>
 					<DialogClose>
-						<Button type='button' variant='ghost'>
+						<Button type='button' variant='ghost'
+						disabled={isPending}
+						>
 							Cancelar
 						</Button>
 					</DialogClose>
-					<Button variant='destructive' onClick={onDelete}>
-						Deletar
+					<Button variant='destructive' onClick={onDelete}
+					disabled={isPending}
+					>
+						{isPending ? <Loader2 className='animate-spin'/> : "Deletar"}
 					</Button>
 				</DialogFooter>
 
