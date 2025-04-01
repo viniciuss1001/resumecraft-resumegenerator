@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import Logo from '@/../public/logo.svg'
-import AiGeneratorBtnDropDown from "./ai-generator"
+import AiGeneratorBtnDropDown from "./ai-generation/ai-generator"
 import { Separator } from "@/components/ui/separator"
 import BasicInforesume from "./sections/basic-info"
 import SummaryComponent from "./sections/summary"
