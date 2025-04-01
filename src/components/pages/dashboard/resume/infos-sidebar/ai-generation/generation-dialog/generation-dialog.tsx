@@ -5,7 +5,7 @@ type GenerationDialogProps = BaseDialogProps & {
 	mode: AIGenerationMode
 }
 
-const GenerationDialog = ({mode, ...props }: GenerationDialogProps) => {
+const GenerationDialog = ({mode, open, setOpen,...props }: GenerationDialogProps) => {
 
 	const configPerMode: Record<AIGenerationMode, JSX.Element> = {
 		JOB_TITLE: <div>Gerar conteúdo para vaga de emprego</div>,
@@ -18,6 +18,8 @@ const GenerationDialog = ({mode, ...props }: GenerationDialogProps) => {
 	return (
 		<DialogToUse 
 		{...props}
+		open={open}
+		setOpen={setOpen}
 		title='Inteligência Artificial'
 		description='O conteúdo gerado irá sobrescrever os campos existentes. Cada geração consome 1 crédito'
 		content={content}
