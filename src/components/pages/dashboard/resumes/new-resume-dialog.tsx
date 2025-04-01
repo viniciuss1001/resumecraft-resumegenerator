@@ -3,12 +3,14 @@ import DialogToUse, { BaseDialogProps } from '@/components/shared/Estructural-di
 import InputField from '@/components/shared/InputField'
 import { Button } from '@/components/ui/button'
 import { createResume } from '@/db/actions'
+import { useMutation } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-type FormData ={
+type FormData = {
   title: string
 }
 
@@ -18,38 +20,38 @@ const NewResumeDialog = (props: BaseDialogProps) => {
 
   const router = useRouter()
 
-  const onSubmit = async (data: FormData) => {
-    try {
-
-      const resume = await createResume(data.title)
+  const { mutate: handleCreateResume, isPending } = useMutation({
+    mutationFn: createResume,
+    onSuccess: (resume) => {
       toast.success("Currículo criado com sucesso.")
       router.push(`/dashboard/resumes/${resume.id}`)
-      
-    } catch (error) {
-      console.log(error)
-      toast.error("Erro ao criar o currículo, tente novamente mais tarde.")
     }
+  })
+
+  const onSubmit = async (data: FormData) => {
+    handleCreateResume(data.title)
   }
 
   return (
-    <DialogToUse 
-    {...props}
-    title='Criar novo currículo'
-    description='Preencha as informações abaixo para criar um novo currículo.'
-    content={
+    <DialogToUse
+      {...props}
+      title='Criar novo currículo'
+      description='Preencha as informações abaixo para criar um novo currículo.'
+      content={
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}
-          className='flex flex-col'
+            className='flex flex-col'
           >
-            <InputField label='Título' name='title' required/>
+            <InputField label='Título' name='title' required />
             <Button type='submit'
-            className='w-max mt-6 ml-auto'
+              className='w-max mt-6 ml-auto'
+              disabled={isPending}
             >
-              Criar
+              {isPending ? <Loader2 className='animate-spin'/> : "Criar"}
             </Button>
-        </form>
+          </form>
         </FormProvider>
-    }
+      }
     />
   )
 }

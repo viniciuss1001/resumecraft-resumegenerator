@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/darkmode/theme-provider";
 import { Toaster } from "sonner";
 import { setDefaultOptions } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import ClientProviders from "@/components/shared/clitent-providers";
 
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito" });
 const nunitoSans = Nunito_Sans({ subsets: ['latin'], variable: '--font-nunito-sans' })
@@ -25,14 +26,10 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={cn("min-h-screen, bg-background font-sans antialiased", nunitoSans.variable, nunito.variable)}>
-        <ThemeProvider attribute='class'
-          defaultTheme='light'
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ClientProviders>
           {children}
           <Toaster />
-        </ThemeProvider>
+        </ClientProviders>
       </body>
     </html>
   );
