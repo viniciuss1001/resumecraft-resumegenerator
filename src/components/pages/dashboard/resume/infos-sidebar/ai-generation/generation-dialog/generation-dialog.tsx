@@ -2,6 +2,7 @@ import { AIGenerationMode } from '@/@types/types'
 import DialogToUse, { BaseDialogProps } from '@/components/shared/Estructural-dialog'
 import React from 'react'
 import GenerateJobTitleComponent from './job-title'
+import FixContentAIComponent from './fix-content'
 type GenerationDialogProps = BaseDialogProps & {
 	mode: AIGenerationMode
 	setOpen: (open: boolean) => void
@@ -14,7 +15,7 @@ const GenerationDialog = ({mode, open, setOpen,...props }: GenerationDialogProps
 
 	const configPerMode: Record<AIGenerationMode, JSX.Element> = {
 		JOB_TITLE: <GenerateJobTitleComponent onClose={onClose}/>,
-		FIX_CONTENT: <div>Melhorar e corrigir conteúdo existente.</div>,
+		FIX_CONTENT: < FixContentAIComponent onClose={onClose}/>,
 		TRANSLATE_CONTENT: <div>Traduzir conteúdo existente</div>
 	}
 

@@ -1,4 +1,4 @@
-import { ResumeStructureData } from "@/@types/types"
+import { ResumeContentData, ResumeStructureData } from "@/@types/types"
 import { api } from "@/lib/axios"
 
 type ResumeDownloadPayload = {
@@ -26,7 +26,14 @@ type AIGenerationPayload = {
 	return data;
  }
 
+const fixContent = async (content: ResumeContentData) => {
+	const data = await api.post("/generate/fix-content", {content})
+
+	return data
+}
+
 export const ApiService = {
 	getResumeUrl,
-	generateContentForJob
+	generateContentForJob,
+	fixContent
 }
