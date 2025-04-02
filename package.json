@@ -10,7 +10,6 @@
     "db:studio": "npx drizzle-kit studio",
     "db:push": "npx drizzle-kit push",
     "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "tsx ./src/db/migrate.ts",
     "db:migrate-doc": "npx drizzle-kit push",
     "db:apply-mig": "npx drizzle-kit migrate",
     "postinstall": "npx db:migrate"
