@@ -31,7 +31,6 @@ const DialogToUse = ({
 }: DialogToUseProps) => {
 
     useEffect(() => {
-        console.log("Dialog open", open)
     },[open])
     return (
         <Dialog open={open} onOpenChange={setOpen}>

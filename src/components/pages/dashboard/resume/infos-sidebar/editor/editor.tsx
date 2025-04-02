@@ -5,6 +5,7 @@ import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import { cn } from '@/lib/utils'
 import MenuBarEditorComponent from './menu-bar'
+import { useEffect } from 'react'
 
 type EditorComponentProps = {
     value: string
@@ -51,6 +52,16 @@ const EditorComponent = ({
         autofocus: false,
         immediatelyRender: false
     })
+
+    useEffect(() => {
+        const editorHTML = editor?.getHTML()
+
+        if(editorHTML !== value) {
+            setTimeout(() => {
+                editor?.commands.setContent(value)
+            },0)
+        } 
+    }, [value])
 
 
     return (

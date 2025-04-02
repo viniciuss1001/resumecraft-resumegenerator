@@ -1,20 +1,21 @@
 import { Input } from "../ui/input"
 import { ComponentProps, ReactNode } from "react"
-import {Controller, useFormContext} from 'react-hook-form'
+import {Control, Controller, useFormContext} from 'react-hook-form'
 import FieldWrapperComponent from "./field-wrapper"
 
 type InputFieldProps = ComponentProps <typeof Input> & {
   label: string, 
   name: string,
   containerClassName?: string,
-  extraContent?: (value: string) => ReactNode
+  extraContent?: (value: string) => ReactNode,
+  control?: Control<any, any>
 }
 
-const InputField = ({label, name, required,containerClassName, extraContent, ...props}:InputFieldProps) => {
+const InputField = ({label, name, required,containerClassName, extraContent,control: customControl, ...props}:InputFieldProps) => {
     const {control} = useFormContext()
   return (
     <Controller 
-      control={control}
+      control={customControl ?? control}
       rules={{
         required: required && 'Campo obrigatório'
       }}
