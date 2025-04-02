@@ -13,7 +13,7 @@
     "db:migrate": "tsx ./src/db/migrate.ts",
     "db:migrate-doc": "npx drizzle-kit push",
     "db:apply-mig": "npx drizzle-kit migrate",
-    "postinstall": "yarn db:migrate"
+    "postinstall": "npx db:migrate"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.8.0",
