@@ -12,7 +12,7 @@
     "db:generate": "npx drizzle-kit generate",
     "db:migrate-doc": "npx drizzle-kit push",
     "db:apply-mig": "npx drizzle-kit migrate",
-    "postinstall": "npx db:migrate"
+    "postinstall": "npx db:migrate-doc"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.8.0",
