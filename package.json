@@ -12,7 +12,6 @@
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
     "postinstall": "npm run db:migrate"
-    
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.8.0",
@@ -45,6 +44,8 @@
     "drizzle-orm": "^0.41.0",
     "lucide-react": "^0.483.0",
     "mergician": "^2.0.2",
+    "motion": "^12.6.3",
+    "motion-plus": "^0.1.6",
     "next": "14.2.5",
     "next-auth": "5.0.0-beta.25",
     "next-themes": "^0.4.6",
