@@ -1,5 +1,7 @@
 import { formatTailwindHTML } from '@/lib/utils'
 import pupepeteer  from 'puppeteer'
+import puppeteerCore from 'puppeteer-core'
+import chromium from '@sparticuz/chromium'
 
 export const POST = async (request: Request) => {
 	try {
@@ -11,12 +13,23 @@ export const POST = async (request: Request) => {
 			{ message: "Parâmentros inválidos." },
 			{ status: 400 }
 		)
-		const browser = await pupepeteer.launch()
+		let browser = null
+
+		if (process.env.NODE_ENV === 'development'){
+			browser = await pupepeteer.launch()
+		} else {
+			browser = await puppeteerCore.launch({
+				args: chromium.args,
+				defaultViewport: chromium.defaultViewport,
+				executablePath: await chromium.executablePath(),
+				headless: chromium.headless
+			})
+		}
 
 		const page = await browser.newPage()
 
 		await page.setContent(formatTailwindHTML(html, structure))
-
+		//@ts-expect-error
 		const bodyHeight = await page.evaluate(() => {
 			return document.body.scrollHeight + 20
 		})
