@@ -1,5 +1,5 @@
 "use client"
-import DialogToUse, { BaseDialogProps } from '@/components/shared/Estructural-dialog'
+import { BaseDialogProps } from '@/components/shared/Estructural-dialog'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { deleteResumeData } from '@/db/actions'

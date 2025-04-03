@@ -91,7 +91,6 @@ const ResumePage = ({
       const updatedData = methods.getValues()
 
       updateResumeData(resumeId, updatedData)
-      console.log("salvo no banco")
 
     } catch (error) {
       console.log(error)

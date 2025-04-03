@@ -68,17 +68,40 @@ export const duplicateResume = async (id: string, title: string) => {
 	const resume = await db.query.resumes.findFirst({
 		where: eq(resumes.id, id)
 	})
-	if(!resume) throw new Error("Currículo não encontrado.")
+	if (!resume) throw new Error("Currículo não encontrado.")
 
 	const newResume = await db
-	.insert(resumes)
-	.values({
-		title, 
-		userId, 
-		data: resume.data
-	})
-	.returning()
+		.insert(resumes)
+		.values({
+			title,
+			userId,
+			data: resume.data
+		})
+		.returning()
 	revalidatePath("/dashboard/resumes")
 
 	return newResume[0]
+}
+
+export const updateResumeTitle = async (id: string, title: string) => {
+	const session = await auth()
+	const userId = session?.user?.id
+
+	const resume = await db.query.resumes.findFirst({
+		where: eq(resumes.id, id)
+	})
+
+	if (!userId) throw new Error("Usuário não encontrado.")
+	if (resume?.userId !== userId) throw new Error("Usuário não autorizado.")
+
+	const updatedResume = await db
+		.update(resumes)
+		.set({title, updatedAt: new Date()})
+		.where(eq(resumes.id, id))
+		.returning()
+
+	revalidatePath("/dashboard/resumes")
+
+	return updatedResume[0]
+
 }

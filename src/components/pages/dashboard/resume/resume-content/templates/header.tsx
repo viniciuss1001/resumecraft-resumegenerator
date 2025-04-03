@@ -7,6 +7,7 @@ import { ReactNode, useState } from "react"
 import DeleteResumeDialog from "../delete-resume-dialog"
 import DuplicateResumeDialog from "../duplicate-resume-dialog"
 import { useResumeDownload } from "@/hooks/use-resume-download"
+import EditResumeTitleComponent from "../edit-title"
 
 type ResumeContentHeaderProps = {
 	title: string
@@ -46,6 +47,19 @@ const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 				</p>
 			</div>
 			<div className="flex gap-1">
+				{/*rename resume */}
+				<TooltipProvider>
+					<Tooltip>
+						<TooltipTrigger >
+							<EditResumeTitleComponent />
+						</TooltipTrigger>
+						<TooltipContent>
+							<p className="text-xs ">
+								Renomear Currículo
+							</p>
+						</TooltipContent>
+					</Tooltip>
+				</TooltipProvider>
 				{/*Delete Dialog */}
 				<TooltipProvider>
 					<Tooltip>
@@ -89,6 +103,7 @@ const ResumeContentHeader = (props: ResumeContentHeaderProps) => {
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
+				
 			</div>
 		</header>
 	)
