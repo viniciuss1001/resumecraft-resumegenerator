@@ -32,7 +32,7 @@ const ResumePage = ({
       summary: '<p></p>',
       image: {
         url: user?.image ?? '',
-        visible: true
+        visible: true 
       },
       infos: {
         email: user?.email ?? '',

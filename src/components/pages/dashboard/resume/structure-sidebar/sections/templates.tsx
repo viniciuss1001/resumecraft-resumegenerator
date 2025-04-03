@@ -34,7 +34,7 @@ const TemplatesListSectionComponent = () => {
 									onClick={() => field.onChange(template)}
 								>
 									<Image 
-									className="w-full h-full object-cover"
+									className="w-full h-full object-cover rounded-sm"
 									width={150} height={130}
 									alt={template}
 									src={`/templates/${template}.webp`}
