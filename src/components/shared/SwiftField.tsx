@@ -16,6 +16,7 @@ const SwiftField = ({name, className, ...props}:SwiftFieldProps) => {
       render={({field}) => (
         <Switch {...props} checked={field.value}
         onChange={field.onChange}
+        onCheckedChange={field.onChange}
         className={cn('flex', className)}
         />
       )}

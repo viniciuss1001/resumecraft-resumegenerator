@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Resume Creator",
   description: "Generate you Virtual Curriculum",
   icons: {
-    icon: '/favicon.svg'
+    icon: `/folder.png`
   }
 };
 
