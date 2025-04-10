@@ -18,7 +18,7 @@ const ResumeContentComponent = ({ title }: ResumeContentProps) => {
   const data = watch()
 
   return (
-    <section className="overflow-hidden w-full h-full flex items-center justify-center relative dark: bg-background">
+    <section className="overflow-hidden w-full h-full flex items-center justify-center relative bg-slate-100 dark:bg-background">
       <TransformWrapper
         initialScale={0.5}
         minScale={0.4}

@@ -20,7 +20,7 @@ export default function Home() {
         <div className="w-full max-w-[1200px] mx-auto flex flex-col md:flex-row gap-8 md:gap-12">
           <div>
             <Image src={Logo} alt="Criador de Currículos" className="w-full max-w-[100px] mb-8 dark:bg-white p-2 rounded-sm"
-              priority={true}
+              priority={true} 
             />
             <SplitTextComponent 
             text="Um criador de currículos gratuito e de fácil usabilidade."
