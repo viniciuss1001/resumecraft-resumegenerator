@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { api } from "@/lib/axios"
@@ -11,7 +10,6 @@ import { useState } from "react"
 const BuyCreditsComponent = () => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [selectedCredits, setSelectedCredits] = useState<number>(5)
-
 
 	const handleBuyCredits = async () => {
 		try {

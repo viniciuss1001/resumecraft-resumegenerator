@@ -50,3 +50,21 @@ export const getUserCreditsAndFreeResumes = cache(async () => {
 
 	return userCreditsInfo
 })
+
+export const getUserCredits = async () => {
+	const session = await auth()
+	const userId = session?.user?.id
+
+  if (!userId) throw new Error("Usuário não encontrado.")
+
+	const [user] = await db
+	.select({
+		credits: users.credits
+	})
+	.from(users)
+	.where(eq(users.id, userId))
+
+	if(!user) throw new Error("Usuário não encontrado.")
+
+	return user.credits ?? 0
+}
