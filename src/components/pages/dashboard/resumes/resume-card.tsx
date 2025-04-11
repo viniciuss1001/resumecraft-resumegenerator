@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { ResumeDto } from '@/db/types'
 import { formatDistanceToNow } from 'date-fns'
+import MoreActionsResumeComponent from '../more-actions-resume'
 
 interface ResumeCardButtonProps {
   title: string
@@ -40,7 +41,9 @@ const ResumeCardComponent = ({ resume }: ResumeCardProps) => {
   const formattedLastUpdate = formatDistanceToNow(new Date(resume.updatedAt), { addSuffix: true })
 
   return (
-    <Link href={`/dashboard/resumes/${resume.id}`}
+   <div className='relative'>
+    <MoreActionsResumeComponent />
+     <Link href={`/dashboard/resumes/${resume.id}`}
       className='block w-full'
     >
       <ResumeCardButtonComponent
@@ -48,6 +51,7 @@ const ResumeCardComponent = ({ resume }: ResumeCardProps) => {
         description={`Última atualização ${formattedLastUpdate}`}
       />
     </Link>
+   </div>
   )
 }
 
