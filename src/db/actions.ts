@@ -2,7 +2,7 @@
 
 import { auth } from "@/lib/auth"
 import { db } from "./drizzle"
-import { resumes } from "./schema"
+import { resumes, users } from "./schema"
 import { revalidatePath } from "next/cache"
 import { ResumeData } from "@/@types/types"
 import { eq } from "drizzle-orm"
@@ -13,6 +13,40 @@ export const createResume = async (title: string) => {
 	const userId = session?.user?.id
 
 	if (!userId) throw new Error("Usuário inexistente.")
+
+	//get user credtis
+	const [user] = await db
+		.select({
+			credits: users.credits,
+			resumesCreatedFree: users.resumesCreditesFree
+		})
+		.from(users)
+		.where(eq(users.id, userId))
+
+	if (!user) throw new Error("Usuário não encontrado.")
+
+	const { credits, resumesCreatedFree } = user
+
+	//check if use 2 free credits
+	if (resumesCreatedFree >= 2 && credits <= 0) {
+		throw new Error("Você atingiu o limite de currículos gratuitos. Compre créditos para poder criar mais.")
+	}
+
+	//use credit, -1
+	if (resumesCreatedFree >= 2 && credits > 0) {
+		await db
+			.update(users)
+			.set({ credits: credits - 1 })
+			.where(eq(users.id, userId))
+	}
+
+	//if has free resume, + 1
+	if (resumesCreatedFree < 2) {
+		await db
+			.update(users)
+			.set({ resumesCreditesFree: resumesCreatedFree + 1 })
+			.where(eq(users.id, userId))
+	}
 
 	//to create a resume
 	const newResume = await db
@@ -96,7 +130,7 @@ export const updateResumeTitle = async (id: string, title: string) => {
 
 	const updatedResume = await db
 		.update(resumes)
-		.set({title, updatedAt: new Date()})
+		.set({ title, updatedAt: new Date() })
 		.where(eq(resumes.id, id))
 		.returning()
 

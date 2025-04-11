@@ -19,6 +19,8 @@ import {
 	email: text("email").unique(),
 	emailVerified: timestamp("emailVerified", { mode: "date" }),
 	image: text("image"),
+	credits: integer("credits").default(0).notNull(),
+	resumesCreditesFree: integer("resumes_created_free").default(0).notNull()
  })
   
  export const accounts = pgTable(
