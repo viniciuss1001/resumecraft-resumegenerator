@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Copy, Download, Home, Loader2 } from "lucide-react"
+import { Download, Home, Loader2 } from "lucide-react"
 import Link from "next/link"
 
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
 import DeleteResumeDialog from "../delete-resume-dialog"
 import DuplicateResumeDialog from "../duplicate-resume-dialog"
 import { useResumeDownload } from "@/hooks/use-resume-download"
