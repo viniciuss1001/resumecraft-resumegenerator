@@ -6,6 +6,7 @@ import { resumes, users } from "./schema"
 import { revalidatePath } from "next/cache"
 import { ResumeData } from "@/@types/types"
 import { eq } from "drizzle-orm"
+import { getUserCreditsAndFreeResumes } from "./queries"
 
 export const createResume = async (title: string) => {
 	const session = await auth()
@@ -99,6 +100,19 @@ export const duplicateResume = async (id: string, title: string) => {
 	const userId = session?.user?.id
 
 	if (!userId) throw new Error("Usuário não encontrado.")
+
+	const userCreditsInfo = await getUserCreditsAndFreeResumes()
+
+	if (!userCreditsInfo) throw new Error("Informações sobre os créditos não encontradas.")
+
+	const hasCredit = (userCreditsInfo.credits ?? 0) > 0
+	
+	if (!hasCredit) {
+		throw new Error("Você não possui créditos para duplicar.")
+	}
+
+	//query for duplicate resume
+
 	const resume = await db.query.resumes.findFirst({
 		where: eq(resumes.id, id)
 	})
@@ -112,6 +126,16 @@ export const duplicateResume = async (id: string, title: string) => {
 			data: resume.data
 		})
 		.returning()
+
+	//-1 credit
+		await db
+			.update(users)
+			.set({
+				credits: (userCreditsInfo.credits! - 1)
+			})
+			.where(eq(users.id, userId))
+
+
 	revalidatePath("/dashboard/resumes")
 
 	return newResume[0]

@@ -1,13 +1,13 @@
 import Image from "next/image"
 import Link from "next/link"
 import Logo from '@/../public/logo.svg'
-import AiGeneratorBtnDropDown from "./ai-generation/ai-generator"
 import { Separator } from "@/components/ui/separator"
 import BasicInforesume from "./sections/basic-info"
 import SummaryComponent from "./sections/summary"
 import MultiplesSectionsComponent from "./sections/multiples"
 import BuyCreditsComponent from "./buy-credits/buy-credits"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import UserCreditsComponent from "./buy-credits/user-credits"
 
 const InfoSidebarComponent = () => {
   return (
@@ -17,6 +17,9 @@ const InfoSidebarComponent = () => {
           <Image src={Logo} alt="Resume Creator"
           width={100} height={10}/>
         </Link>
+        {/* user credits */}
+        <UserCreditsComponent />
+        {/* buy credits */}
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
