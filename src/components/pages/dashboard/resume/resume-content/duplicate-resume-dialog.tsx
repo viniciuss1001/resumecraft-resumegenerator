@@ -16,12 +16,17 @@ type FormData = {
 	title: string
 }
 
-const DuplicateResumeDialog = (props: BaseDialogProps) => {
+type DuplicateResumeDialogProps = BaseDialogProps & {
+	receivedResumeId?: string
+	placeholder?: string
+}
+
+const DuplicateResumeDialog = ({ receivedResumeId, placeholder }: DuplicateResumeDialogProps) => {
 	const methods = useForm<FormData>()
 	const params = useParams()
 	const router = useRouter()
 
-	const resumeId = params.id as string
+	const resumeId = receivedResumeId ?? (params.id as string)
 
 	const { mutate: handleDuplicateResume, isPending } = useMutation({
 		mutationFn: (title: string) => duplicateResume(resumeId, title),
@@ -38,8 +43,9 @@ const DuplicateResumeDialog = (props: BaseDialogProps) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant='ghost' className="flex items-center justify-center">
+				<Button variant='ghost' className="flex items-center justify-start w-full">
 					<Copy />
+					{placeholder ? <span className="text-xs">{placeholder}</span> : ''}
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
@@ -64,15 +70,15 @@ const DuplicateResumeDialog = (props: BaseDialogProps) => {
 					<DialogFooter className='flex gap-2 justify-between mt-5'>
 						<DialogClose>
 							<Button type='button' variant='ghost'
-							disabled={isPending}
+								disabled={isPending}
 							>
 								Cancelar
 							</Button>
 						</DialogClose>
 						<Button variant='default' type='submit'
-						disabled={isPending}
+							disabled={isPending}
 						>
-							{isPending ? <Loader2 className='animate-spin'/> : "Duplicar"}
+							{isPending ? <Loader2 className='animate-spin' /> : "Duplicar"}
 						</Button>
 					</DialogFooter>
 				</form>

@@ -7,16 +7,20 @@ import { DialogClose } from '@radix-ui/react-dialog'
 import { useMutation } from '@tanstack/react-query'
 import { Loader2, Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 
+type DeleteResumeProps = BaseDialogProps & {
+	receivedResumeId?: string
+	placeholder?: string
+}
 
-const DeleteResumeDialog = (props: BaseDialogProps) => {
+const DeleteResumeDialog = ({ receivedResumeId, placeholder }: DeleteResumeProps) => {
 
 	const params = useParams()
 	const router = useRouter()
 
-	const resumeId = params.id as string
+	const resumeId = receivedResumeId ?? (params.id as string)
 
 	const { mutate: handleDeleteResume, isPending } = useMutation({
 		mutationFn: deleteResumeData,
@@ -28,13 +32,15 @@ const DeleteResumeDialog = (props: BaseDialogProps) => {
 
 	const onDelete = async () => {
 		handleDeleteResume(resumeId)
+
 	}
 
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant='ghost' className="flex items-center justify-center">
+				<Button variant='ghost' className="flex items-center justify-start w-full">
 					<Trash />
+					{placeholder ? <span className='text-xs'>{placeholder}</span> : ''}
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
@@ -49,15 +55,15 @@ const DeleteResumeDialog = (props: BaseDialogProps) => {
 				<DialogFooter className='flex gap-2 justify-between'>
 					<DialogClose>
 						<Button type='button' variant='ghost'
-						disabled={isPending}
+							disabled={isPending}
 						>
 							Cancelar
 						</Button>
 					</DialogClose>
 					<Button variant='destructive' onClick={onDelete}
-					disabled={isPending}
+						disabled={isPending}
 					>
-						{isPending ? <Loader2 className='animate-spin'/> : "Deletar"}
+						{isPending ? <Loader2 className='animate-spin' /> : "Deletar"}
 					</Button>
 				</DialogFooter>
 

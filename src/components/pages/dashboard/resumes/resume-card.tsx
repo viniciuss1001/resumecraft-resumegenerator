@@ -28,7 +28,6 @@ export const ResumeCardButtonComponent = ({
       </div>
     </button>
 
-
   )
 }
 
@@ -40,9 +39,12 @@ const ResumeCardComponent = ({ resume }: ResumeCardProps) => {
 
   const formattedLastUpdate = formatDistanceToNow(new Date(resume.updatedAt), { addSuffix: true })
 
+  const resumeId = resume.id
+
   return (
    <div className='relative'>
-    <MoreActionsResumeComponent />
+    <MoreActionsResumeComponent resumeId={resumeId}/>
+
      <Link href={`/dashboard/resumes/${resume.id}`}
       className='block w-full'
     >

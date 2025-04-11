@@ -15,13 +15,18 @@ type FormData = {
 	title: string
 }
 
-const EditResumeTitleComponent = (props: BaseDialogProps) => {
-	const {register, handleSubmit, formState: {errors}, reset} = useForm<FormData>()
+type EditTitleResume = BaseDialogProps & {
+	receivedResumeId?: string
+	placeholder?: string
+}
+
+const EditResumeTitleComponent = ({ receivedResumeId, placeholder }: EditTitleResume) => {
+	const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>()
 	const params = useParams()
 	const router = useRouter()
-	const resumeId = params.id as string
+	const resumeId = receivedResumeId ?? (params.id as string)
 
-	const {mutate: handleEditTitle, isPending} = useMutation({
+	const { mutate: handleEditTitle, isPending } = useMutation({
 		mutationFn: (title: string) => updateResumeTitle(resumeId, title),
 		onSuccess: () => {
 			toast.success("Título atualizado com sucesso.")
@@ -35,45 +40,46 @@ const EditResumeTitleComponent = (props: BaseDialogProps) => {
 		handleEditTitle(data.title)
 	}
 
-  return (
-	 <Dialog>
-		<DialogTrigger asChild>
-			<Button variant='ghost' className="flex items-center justify-center">
-				<Edit />
-			</Button>
-		</DialogTrigger>
-		<DialogContent>
-			<DialogHeader className="m-2 gap-2">
-				<DialogTitle className="m-1 font-title">
-					Editar Título do Currículo
-				</DialogTitle>
-				<DialogDescription className="text-xs text-muted-foreground">
-					Atualize o título do seu currículo.
-				</DialogDescription>
-			</DialogHeader>
-			<form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-				<div>
-					<Input placeholder="Novo título"
-					{...register("title", {required: "Campo Obrigatório."})}
-					/>
-					{errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
-				</div>
-				<DialogFooter className="flex gap-2 justify-between mt-5">
-					<DialogClose>
-						<Button type="button" variant='ghost' disabled={isPending}>
-							Cancelar
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button variant='ghost' className="flex items-center justify-start w-full">
+					<Edit />
+					{placeholder ? <span className="text-xs">{placeholder}</span> : ''}
+				</Button>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogHeader className="m-2 gap-2">
+					<DialogTitle className="m-1 font-title">
+						Editar Título do Currículo
+					</DialogTitle>
+					<DialogDescription className="text-xs text-muted-foreground">
+						Atualize o título do seu currículo.
+					</DialogDescription>
+				</DialogHeader>
+				<form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+					<div>
+						<Input placeholder="Novo título"
+							{...register("title", { required: "Campo Obrigatório." })}
+						/>
+						{errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
+					</div>
+					<DialogFooter className="flex gap-2 justify-between mt-5">
+						<DialogClose>
+							<Button type="button" variant='ghost' disabled={isPending}>
+								Cancelar
+							</Button>
+						</DialogClose>
+						<Button variant='default' type="submit" disabled={isPending}>
+							{isPending ? <Loader2 className="animate-spin" /> : "Salvar"}
 						</Button>
-					</DialogClose>
-					<Button variant='default' type="submit" disabled={isPending}>
-						{isPending ? <Loader2 className="animate-spin"/> : "Salvar"}
-					</Button>
-				</DialogFooter>
+					</DialogFooter>
 
-			</form>
-		</DialogContent>
+				</form>
+			</DialogContent>
 
-	 </Dialog>
-  )
+		</Dialog>
+	)
 }
 
 export default EditResumeTitleComponent
