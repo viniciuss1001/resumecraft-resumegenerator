@@ -132,7 +132,7 @@ const MultipleDragListComponent = ({
                 )}
 
                 {!isEmpty && (
-                    <Button variant='outline' className="w-max ml-auto mt-auto gap-2 mt-3" onClick={onAdd}>
+                    <Button variant='outline' className="w-max ml-auto gap-2 mt-3" onClick={onAdd}>
                         <Plus size={14} />
                         Adicionar Item
                     </Button>
