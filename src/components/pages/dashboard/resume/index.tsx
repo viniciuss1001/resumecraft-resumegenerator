@@ -105,14 +105,17 @@ const ResumePage = ({
     <main className='w-full h-screen overflow-hidden'>
       <FormProvider {...methods}>
         <ResizablePanelGroup direction="horizontal" className="w-full h-full">
+          {/* left */}
           <ResizablePanel minSize={20} maxSize={40} defaultSize={30}>
             <InfoSidebarComponent />
           </ResizablePanel>
           <ResizableHandle withHandle /> {/*panel resize*/}
+          {/* center - content */}
           <ResizablePanel>
             <ResumeContentComponent title={title}/>
           </ResizablePanel>
           <ResizableHandle withHandle /> {/*panel resize*/}
+          {/* right side  */}
           <ResizablePanel minSize={20} maxSize={35} defaultSize={25}>
             <StructureSidebarComponent />
           </ResizablePanel>
