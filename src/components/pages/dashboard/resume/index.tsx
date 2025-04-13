@@ -11,10 +11,15 @@ import { FormProvider, useForm } from "react-hook-form"
 import { ResumeData } from "@/@types/types"
 import { User } from "next-auth"
 import { useDebounce } from "@/hooks/use-debounce"
-import { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { updateResumeData } from "@/db/actions"
 import { useParams } from "next/navigation"
 import { mergician } from 'mergician'
+import LeftSidebarToggleButton from "../resumes/left-sidebar-toggle"
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { ChevronDown, ChevronUp, Sandwich, X } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 
 type ResumePageProps = {
@@ -27,12 +32,13 @@ const ResumePage = ({
   title, initialData, user
 }: ResumePageProps) => {
 
+
   const defaultValues: ResumeData = {
     content: {
       summary: '<p></p>',
       image: {
         url: user?.image ?? '',
-        visible: true 
+        visible: true
       },
       infos: {
         email: user?.email ?? '',
@@ -74,7 +80,7 @@ const ResumePage = ({
   const params = useParams()
   const resumeId = params.id as string
 
-  const methods = useForm<ResumeData>({ 
+  const methods = useForm<ResumeData>({
     defaultValues: mergician(defaultValues, initialData)
   })
 
@@ -102,26 +108,62 @@ const ResumePage = ({
   }, [debouncedData, handleSaveUpdate])
 
   return (
-    <main className='w-full h-screen overflow-hidden'>
+    <main className='w-full h-screen overflow-hidden '>
       <FormProvider {...methods}>
-        <ResizablePanelGroup direction="horizontal" className="w-full h-full">
+        {/* Mobile layout: stack vertically */}
+        <div className="flex flex-col h-full md:hidden ">
+          <Dialog >
+            <DialogTrigger asChild>
+              <Button variant='outline' size='sm'>
+                <ChevronDown size={20} />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="flex h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] rounded">
+              <div className=" overflow-y-auto ">
+                <InfoSidebarComponent />
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          <div className="flex-1 overflow-y-auto">
+            <ResumeContentComponent title={title} />
+          </div>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant='ghost' size='sm'>
+                <ChevronUp />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="flex h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] rounded">
+              <div className=" overflow-y-auto">
+                <StructureSidebarComponent />
+              </div>
+            </DialogContent>
+          </Dialog>
+
+        </div>
+        <div className="hiddle md:block w-full h-full">
           {/* left */}
-          <ResizablePanel minSize={20} maxSize={40} defaultSize={30}>
-            <InfoSidebarComponent />
-          </ResizablePanel>
-          <ResizableHandle withHandle /> {/*panel resize*/}
-          {/* center - content */}
-          <ResizablePanel>
-            <ResumeContentComponent title={title}/>
-          </ResizablePanel>
-          <ResizableHandle withHandle /> {/*panel resize*/}
-          {/* right side  */}
-          <ResizablePanel minSize={20} maxSize={35} defaultSize={25}>
-            <StructureSidebarComponent />
-          </ResizablePanel>
-        </ResizablePanelGroup>
+          <ResizablePanelGroup direction="horizontal" className="w-full h-full">
+            <ResizablePanel minSize={10} maxSize={40} defaultSize={30} >
+              <InfoSidebarComponent />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            {/*panel resize*/}
+            {/* center - content */}
+            <ResizablePanel>
+              <ResumeContentComponent title={title} />
+            </ResizablePanel>
+            <ResizableHandle withHandle /> {/*panel resize*/}
+            {/* right side  */}
+            <ResizablePanel minSize={20} maxSize={35} defaultSize={25}>
+              <StructureSidebarComponent />
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
       </FormProvider>
-    </main>
+    </main >
   )
 }
 
