@@ -6,7 +6,7 @@ import SelectLanguage from './sections/language'
 
 const StructureSidebarComponent = () => {
   return (
-    <aside className='w-full h-full p-6 overflow-y-auto'>
+    <aside className='w-full h-[calc(100vh-2rem)] md:h-full  p-6 overflow-y-auto my-4 rounded-sm'>
         <TemplatesListSectionComponent />
         <Separator className='my-5'/>
         <LayoutSectionComponent />

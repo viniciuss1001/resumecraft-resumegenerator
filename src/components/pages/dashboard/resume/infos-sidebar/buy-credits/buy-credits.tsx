@@ -61,9 +61,9 @@ const BuyCreditsComponent = () => {
 					</SelectTrigger>
 
 					<SelectContent>
-						<SelectItem value="5">5 Créditos - R$ 10</SelectItem>
-						<SelectItem value="10">10 Créditos - R$ 18</SelectItem>
-						<SelectItem value="20">20 Créditos - R$ 30</SelectItem>
+						<SelectItem value="5">5 Créditos - R$ 5</SelectItem>
+						<SelectItem value="10">10 Créditos - R$ 9,49</SelectItem>
+						<SelectItem value="20">20 Créditos - R$ 17,99</SelectItem>
 					</SelectContent>
 				</Select>
 				<DialogFooter>

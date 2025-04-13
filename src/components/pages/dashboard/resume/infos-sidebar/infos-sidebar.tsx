@@ -11,7 +11,8 @@ import UserCreditsComponent from "./buy-credits/user-credits"
 
 const InfoSidebarComponent = () => {
   return (
-    <aside className="w-full h-full p-6 overflow-y-auto">
+    <aside className="w-full h-[calc(100vh-2rem)] md:h-full my-4
+     p-6 overflow-y-auto sm:my-4">
         <div className="w-full flex items-center justify-between">
         <Link href='/dashboard/resumes'>
           <Image src={Logo} alt="Resume Creator"
@@ -32,6 +33,7 @@ const InfoSidebarComponent = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
+        
         </div>
         <Separator className="my-5"/>
         <BasicInforesume />
