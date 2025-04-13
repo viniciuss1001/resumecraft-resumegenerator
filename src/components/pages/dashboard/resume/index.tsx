@@ -111,7 +111,7 @@ const ResumePage = ({
     <main className='w-full h-screen overflow-hidden '>
       <FormProvider {...methods}>
         {/* Mobile layout: stack vertically */}
-        <div className="flex flex-col h-[calc(100vh-5rem)] md:hidden">
+        <div className="flex flex-col h-[calc(100vh-5rem)] md:hidden overflow-y-hidden">
           <Dialog >
             <DialogTrigger asChild>
               <Button variant='outline' size='sm'>
@@ -141,7 +141,6 @@ const ResumePage = ({
               </div>
             </DialogContent>
           </Dialog>
-
         </div>
         <div className="hidden md:block w-full h-full">
           {/* left */}
