@@ -111,7 +111,7 @@ const ResumePage = ({
     <main className='w-full h-screen overflow-hidden '>
       <FormProvider {...methods}>
         {/* Mobile layout: stack vertically */}
-        <div className="flex flex-col h-[calc(100vh-5rem)] md:hidden ">
+        <div className="flex flex-col h-[calc(100vh-5rem)] md:hidden">
           <Dialog >
             <DialogTrigger asChild>
               <Button variant='outline' size='sm'>
@@ -143,7 +143,7 @@ const ResumePage = ({
           </Dialog>
 
         </div>
-        <div className="hiddle md:block w-full h-full">
+        <div className="hidden md:block w-full h-full">
           {/* left */}
           <ResizablePanelGroup direction="horizontal" className="w-full h-full">
             <ResizablePanel minSize={10} maxSize={40} defaultSize={30} >
