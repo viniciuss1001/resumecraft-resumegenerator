@@ -19,16 +19,16 @@ const BasicInforesume = () => {
         icon={UserRound}
         title="Informações Básicas"
       />
-      <div className="grid grid-cols-2 gap-4 mt-4 w-full">
-        <div className="col-span-full w-full flex gap-3 items-center justify-around">
-         <UploadImageComponent imageUrl={imageUrl} onImageChange={handleImageChange} />
-        <div className="flex flex-col gap-2 items-center justify-center">
-        <p className="font-xs font-medium">Mostar foto?</p>
-        <SwiftField
-            name="content.image.visible"
-            className="mb-2 "
-          />
-        </div>
+      <div className="grid grid-cols-2 gap-2 mt-4 w-full">
+        <div className="col-span-full w-full flex gap-3 items-center ">
+          <UploadImageComponent imageUrl={imageUrl} onImageChange={handleImageChange} />
+          <div className="flex flex-col gap-2 items-center justify-center w-fit ">
+            <p className="font-xs font-medium">Mostar foto?</p>
+            <SwiftField
+              name="content.image.visible"
+              className="mb-2 "
+            />
+          </div>
 
           {/* <InputField
             label="Foto"
@@ -36,6 +36,7 @@ const BasicInforesume = () => {
             placeholder="URL da imagem"
             containerClassName="flex-1"
           /> */}
+          
         </div>
         <InputField label="Nome Completo" name="content.infos.fullName" />
         <InputField label="Cargo" name="content.infos.headline" />
