@@ -11,14 +11,12 @@ import { FormProvider, useForm } from "react-hook-form"
 import { ResumeData } from "@/@types/types"
 import { User } from "next-auth"
 import { useDebounce } from "@/hooks/use-debounce"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { updateResumeData } from "@/db/actions"
 import { useParams } from "next/navigation"
 import { mergician } from 'mergician'
-import LeftSidebarToggleButton from "../resumes/left-sidebar-toggle"
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { ChevronDown, ChevronUp, Sandwich, X } from "lucide-react"
-import { Card } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { ChevronDown, ChevronUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 
