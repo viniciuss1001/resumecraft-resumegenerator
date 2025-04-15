@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { MoreHorizontal } from "lucide-react"
 import EditResumeTitleComponent from "./resume/resume-content/edit-title"
 import DeleteResumeDialog from "./resume/resume-content/delete-resume-dialog"
 import DuplicateResumeDialog from "./resume/resume-content/duplicate-resume-dialog"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 type MoreActionsResumeComponentProps = {
 	resumeId?: string
