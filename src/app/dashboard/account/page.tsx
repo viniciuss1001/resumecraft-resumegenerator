@@ -1,15 +1,13 @@
 import BreadCrumpComponent from '@/components/pages/account/BreadCrump-user'
+import BuyCreditsComponent from '@/components/pages/dashboard/resume/infos-sidebar/buy-credits/buy-credits'
 import NewResumeDialog from '@/components/pages/dashboard/resumes/new-resume-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { createResume } from '@/db/actions'
 import { getResumes, getUserCredits } from '@/db/queries'
 import { auth } from '@/lib/auth'
-import { useMutation } from '@tanstack/react-query'
-import { Coins, DollarSign, Mail, Paperclip, Plus, User } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
+import { Coins, DollarSign, LogOut, Mail, Paperclip, Plus, User } from 'lucide-react'
+import { signOut } from 'next-auth/react'
 
 const AccountPage = async () => {
 
@@ -27,7 +25,7 @@ const AccountPage = async () => {
 
 
 	return (
-		<div className='m-12 border border-slate-800 rounded-sm p-4 flex flex-col'>
+		<div className='m-12 border border-slate-800 rounded-sm p-4 flex flex-col lg:w-[50%] ml-auto mr-auto'>
 			<BreadCrumpComponent userName={userName} />
 			<div className='p-4 flex flex-col items-center justify-center w-[80%] ml-auto mr-auto'>
 				<div className='flex flex-col items-center justify-center gap-2 m-auto'>
@@ -51,29 +49,18 @@ const AccountPage = async () => {
 				<h3 className='text-xl font-semibold font-title'>
 					Informações Gerais:
 				</h3>
-				<div className='w-full flex gap-2 p-2 items-center justify-center border rounded-sm '>
+				<div className='w-full flex gap-2 p-2 items-center border rounded-sm '>
 					<Paperclip />
 					Você tem um total de {resumeLength} resumo(s).
-					<Dialog>
-						<DialogTrigger asChild>
-							<Button variant='default' className='ml-auto'>
-								<Plus />
-								Criar
-							</Button>
-						</DialogTrigger>
-						<DialogContent>
-							<NewResumeDialog />
-						</DialogContent>
-					</Dialog>
 				</div>
-				<div className='w-full flex gap-2 p-2 items-center justify-center border rounded-sm '>
+				<div className='w-full flex gap-2 p-2 items-center justify-between border rounded-sm '>
+					<span className='flex gap-2'>
 					<Coins />
 					Você possui um total de {userCredits} créditos disponíveis.
+					</span>
 
-					<Button variant='default' className='ml-auto w-auto' >
-						<DollarSign />
-						Comprar
-					</Button>
+					<BuyCreditsComponent />
+
 				</div>
 
 			</div>
