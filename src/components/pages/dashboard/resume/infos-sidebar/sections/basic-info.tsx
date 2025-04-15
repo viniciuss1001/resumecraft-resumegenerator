@@ -29,13 +29,6 @@ const BasicInforesume = () => {
               className="mb-2 "
             />
           </div>
-
-          {/* <InputField
-            label="Foto"
-            name="content.image.url"
-            placeholder="URL da imagem"
-            containerClassName="flex-1"
-          /> */}
           
         </div>
         <InputField label="Nome Completo" name="content.infos.fullName" />
