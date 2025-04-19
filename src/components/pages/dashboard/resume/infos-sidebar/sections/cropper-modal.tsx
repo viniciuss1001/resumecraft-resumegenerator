@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@/components/ui/dialog"
+import { UploadImage } from "@/db/actions"
 import { getCroppedImg } from "@/lib/cropImage"
 import { Loader2 } from "lucide-react"
 import { useCallback, useState } from "react"
@@ -25,24 +26,38 @@ const CropperModalComponent = ({ imageSrc, onCancel, onCropComplete, open }: Cro
 		setCroppedAreaPixels(croppedAreaPixels)
 	}, [])
 
+
 	const handleCropComplete = async () => {
 		if (!croppedAreaPixels) return
-
+	 
 		try {
-			setIsCropping(true)
-
-
-			const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels)
-
-
-			onCropComplete(croppedImage)
+		  setIsCropping(true)
+	 
+		  console.log("Iniciando recorte...")
+	 
+		  // 1. Recorta
+		  const base64Image = await getCroppedImg(imageSrc, croppedAreaPixels)
+	 
+		  console.log("Imagem recortada com sucesso:", base64Image)
+	 
+		  // 2. Envia
+		  const uploadedUrl = await UploadImage(base64Image)
+	 
+		  console.log("Imagem enviada com sucesso:", uploadedUrl)
+	 
+		  // 3. Retorna a URL final para uso
+		  onCropComplete(uploadedUrl)
+		  toast.success("Imagem enviada com sucesso!")
 		} catch (err) {
-			toast.error("Erro ao cortar imagem.")
+		  console.error("Erro ao cortar ou enviar a imagem:", err)
+		  toast.error("Erro ao cortar/enviar imagem.")
 		} finally {
-			setIsCropping(false)
-			toast.success("Imagem cortada com sucesso!")
+		  setIsCropping(false)
 		}
-	}
+	 }
+	 
+
+
 
 	return (
 		<Dialog open={open} onOpenChange={onCancel}>

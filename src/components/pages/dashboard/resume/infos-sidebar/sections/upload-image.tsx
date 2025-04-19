@@ -11,54 +11,87 @@ type UploadImageProps = {
 }
 
 const UploadImageComponent = ({ imageUrl, onImageChange }: UploadImageProps) => {
-
 	const [preview, setPreview] = useState(imageUrl)
 	const [cropImage, setCropImage] = useState<string | null>(null)
 	const [isCropping, setIsCropping] = useState(false)
 
+	// Função para enviar a imagem em base64
+	const sendImageToServer = async (base64Image: string) => {
+		try {
+			 const formData = new FormData();
+			 formData.append("file", base64Image);
+  
+			 const response = await fetch("/api/upload", {
+				  method: "POST",
+				  body: formData,
+			 });
+  
+			 // Verificar se a resposta foi bem-sucedida
+			 if (!response.ok) {
+				  throw new Error('Erro na comunicação com o servidor.');
+			 }
+  
+			 const data = await response.json();
+			 if (data.url) {
+				  onImageChange(data.url);
+				  setPreview(data.url);
+				  toast.success("Imagem enviada com sucesso!");
+			 } else {
+				  toast.error("Erro ao enviar imagem.");
+			 }
+		} catch (error) {
+			 console.error(error);
+			 toast.error("Falha ao enviar imagem para o servidor.");
+		}
+  }
+  
+
+	// Função que manipula o arquivo selecionado
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0]
 		if (!file) return
 
-		//verify type
+		// Verifica se o arquivo é do tipo imagem
 		if (!file.type.startsWith("image/")) {
 			toast.error("Por favor, envie uma imagem válida.")
 			return
 		}
 
-		//verify length
-		const fileSize = file.size / (1024 * 1024)
+		// Verifica o tamanho do arquivo
+		const fileSize = file.size / (1024 * 1024) // em MB
 
 		const reader = new FileReader()
 
+		// Lê o arquivo como base64
 		reader.onload = () => {
-			// if (reader.result) {
-			// 	const newImgUrl = reader.result.toString()
-			// 	setPreview(newImgUrl)
-			// 	onImageChange(newImgUrl)
-			// }
-
-			const cropImage = reader.result as string
+			const base64Image = reader.result as string
 
 			if (fileSize > 1) {
-				setCropImage(cropImage)
+				// Se o arquivo for maior que 1MB, abre o modal de recorte
+				setCropImage(base64Image)
 				setIsCropping(true)
 			} else {
-				setPreview(cropImage)
-				onImageChange(cropImage)
+				// Se o arquivo for menor que 1MB, envia para o servidor em base64
+				sendImageToServer(base64Image)
 			}
 		}
 
 		reader.readAsDataURL(file)
 	}
+	// Função para processar a imagem cortada
+	const handleCropComplete = (croppedUrl: string) => {
+		if (!croppedUrl) {
+			 toast.error("Erro ao processar o corte da imagem.");
+			 return;
+		}
+		
+		sendImageToServer(croppedUrl);
+		setIsCropping(false);
+  }
+  
 
-	function handleCropComplete(croppedUrl: string) {
-		setPreview(croppedUrl)
-		onImageChange(croppedUrl)
-		setIsCropping(false)
-	}
-
-	function handleReset() {
+	// Função para resetar a imagem
+	const handleReset = () => {
 		setPreview("")
 		onImageChange("")
 	}
@@ -69,7 +102,6 @@ const UploadImageComponent = ({ imageUrl, onImageChange }: UploadImageProps) => 
 				{preview ? (
 					<AvatarImage src={preview} alt="Foto de Perfil" />
 				) : (
-
 					<AvatarFallback>IMG</AvatarFallback>
 				)}
 			</Avatar>
@@ -91,7 +123,7 @@ const UploadImageComponent = ({ imageUrl, onImageChange }: UploadImageProps) => 
 				</Button>
 			</div>
 
-			{/* modal for image crop */}
+			{/* Modal de corte de imagem, exibido se a imagem for maior que 1MB */}
 			{cropImage && (
 				<CropperModalComponent
 					open={isCropping}

@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache"
 import { ResumeData } from "@/@types/types"
 import { eq } from "drizzle-orm"
 import { getUserCreditsAndFreeResumes } from "./queries"
+import { api } from "@/lib/axios"
+
 
 export const createResume = async (title: string) => {
 	const session = await auth()
@@ -106,7 +108,7 @@ export const duplicateResume = async (id: string, title: string) => {
 	if (!userCreditsInfo) throw new Error("Informações sobre os créditos não encontradas.")
 
 	const hasCredit = (userCreditsInfo.credits ?? 0) > 0
-	
+
 	if (!hasCredit) {
 		throw new Error("Você não possui créditos para duplicar.")
 	}
@@ -128,12 +130,12 @@ export const duplicateResume = async (id: string, title: string) => {
 		.returning()
 
 	//-1 credit
-		await db
-			.update(users)
-			.set({
-				credits: (userCreditsInfo.credits! - 1)
-			})
-			.where(eq(users.id, userId))
+	await db
+		.update(users)
+		.set({
+			credits: (userCreditsInfo.credits! - 1)
+		})
+		.where(eq(users.id, userId))
 
 
 	revalidatePath("/dashboard/resumes")
@@ -163,3 +165,27 @@ export const updateResumeTitle = async (id: string, title: string) => {
 	return updatedResume[0]
 
 }
+
+export const UploadImage = async (base64Image: string) => {
+	console.log("Enviando imagem para o servidor:", base64Image)
+ 
+	const formData = new FormData()
+	formData.append("file", base64Image)
+ 
+	const response = await fetch(`${api}/upload`, {
+		method: "POST",
+		body: formData,
+	})
+	
+ 
+	const data = await response.json()
+ 
+	console.log("Resposta do servidor:", data)
+ 
+	if (data.url) {
+	  return data.url
+	} else {
+	  throw new Error("Erro ao enviar imagem para o servidor")
+	}
+ }
+ 
